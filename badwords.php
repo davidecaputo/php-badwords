@@ -1,10 +1,20 @@
 <?php
     $paragraph = $_GET['paragraph'];
-    $lenghtParagraph = strlen($paragraph);
-    $output = "$paragraph $lenghtParagraph";
+    $lenghtParagraph = '<span class="text-success">La parola è lunga' .' '. strlen($paragraph) .' '. 'caratteri spazi inclusi</span>';
+    if($paragraph){
+        $orgPar = 'Testo originale:';
+        $output = "$paragraph $lenghtParagraph";
+    } else {
+        $output = '<span class="text-danger">Devi inserire un testo</span>';
+    }
     $censoredWord = $_GET['censored'];
     $censoredParagraph = str_replace(strtolower($censoredWord), '<span class="text-danger">***</span>', strtolower($paragraph));
-    $outputCensored = "$censoredParagraph $lenghtParagraph"
+    if($censoredWord && $paragraph){
+        $censPar = 'Testo modificato:';
+        $outputCensored = "$censoredParagraph $lenghtParagraph";
+    } else {
+        $outputCensored = '<span class="text-danger">Devi inserire una parola da censurare</span>';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +28,9 @@
 </head>
 <body>
     <div class="p-5">
+        <h1 class="text-primary"><?php echo $orgPar ?></h1>
         <h1><?php echo $output ?></h1>
+        <h1 class="text-primary"><?php echo $censPar ?></h1>
         <h1><?php echo $outputCensored ?></h1>
     </div>
 </body>
